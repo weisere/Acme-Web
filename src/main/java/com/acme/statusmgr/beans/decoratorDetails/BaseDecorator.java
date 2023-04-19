@@ -1,5 +1,6 @@
 package com.acme.statusmgr.beans.decoratorDetails;
 
+<<<<<<< HEAD
 import com.acme.statusmgr.beans.ServerInterface;
 import com.acme.statusmgr.beans.ServerStatus;
 import com.acme.statusmgr.beans.controller;
@@ -26,4 +27,12 @@ public abstract class BaseDecorator implements ServerInterface {
 //
 //    }
 
+=======
+import com.acme.statusmgr.beans.ServerStatus;
+
+public abstract class BaseDecorator extends ServerStatus {
+    ServerStatus ss;
+
+    public BaseDecorator(ServerStatus ss){this.ss = ss;}
+>>>>>>> 9933481 (This abstract class, BaseDecorator will be the go between the original ServerStatus class and the decorators i will make on top of that class)
 }
