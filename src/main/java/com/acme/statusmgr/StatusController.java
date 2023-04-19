@@ -1,6 +1,7 @@
 package com.acme.statusmgr;
 
 import com.acme.statusmgr.beans.ServerStatus;
+import com.acme.statusmgr.beans.decoratorDetails.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,15 +60,23 @@ public class StatusController {
             @RequestParam(value = "name", defaultValue = "Anonymous") String name,
             @RequestParam List<String> details) {
 
-        ServerStatus detailedStatus = null;
+        ServerStatus detailedStatus = new ServerStatus(counter.incrementAndGet(),
+                String.format(template, name));
 
         if (details != null) {
             Logger logger = LoggerFactory.getLogger("StatusController");
             logger.info("Details were provided: " + Arrays.toString(details.toArray()));
 
             //todo Should do something with all these details that were requested
-
-
+            for (String detail: details) {
+                switch (detail) {
+                    case "availableProcessors" -> detailedStatus = new AvailableProcessors(detailedStatus);
+                    case "freeJVMMemory" -> detailedStatus = new FreeJVMMemory(detailedStatus);
+                    case "jreVersion" -> detailedStatus = new JreVersion(detailedStatus);
+                    case "tempLocation" -> detailedStatus = new TempLocation(detailedStatus);
+                    case "totalJVMMemory" -> detailedStatus = new TotalJVMMemory(detailedStatus);
+                }
+            }
         }
         return detailedStatus; //todo shouldn't just return null
     }
