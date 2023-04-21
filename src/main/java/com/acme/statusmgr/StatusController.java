@@ -1,6 +1,8 @@
 package com.acme.statusmgr;
 
+import com.acme.statusmgr.beans.ServerInterface;
 import com.acme.statusmgr.beans.ServerStatus;
+import com.acme.statusmgr.beans.controller;
 import com.acme.statusmgr.beans.decoratorDetails.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,12 +58,13 @@ public class StatusController {
      *      * @apiNote TODO since Spring picks apart the object returned with Reflection and doesn't care what the return-object's type is, we can change the type of object we return if necessary
      */
     @RequestMapping("/status/detailed")
-    public ServerStatus getDetailedStatus(
+    public ServerInterface getDetailedStatus(
             @RequestParam(value = "name", defaultValue = "Anonymous") String name,
             @RequestParam List<String> details) {
 
-        ServerStatus detailedStatus = new ServerStatus(counter.incrementAndGet(),
+        ServerInterface detailedStatus = new ServerStatus(counter.incrementAndGet(),
                 String.format(template, name));
+
 
         if (details != null) {
             Logger logger = LoggerFactory.getLogger("StatusController");

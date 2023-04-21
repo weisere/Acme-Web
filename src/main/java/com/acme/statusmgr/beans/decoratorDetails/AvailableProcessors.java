@@ -1,21 +1,32 @@
 package com.acme.statusmgr.beans.decoratorDetails;
 
 import com.acme.statusmgr.beans.ServerStatus;
+import com.acme.statusmgr.beans.controller;
 
 public class AvailableProcessors extends BaseDecorator{
     final int requestCost = 3;
 
-    public AvailableProcessors(ServerStatus ss) {
+    public AvailableProcessors(controller ss) {
         super(ss);
     }
 
     @Override
+    public long getId() {
+        return 0;
+    }
+
+    @Override
+    public String getContentHeader() {
+        return ss.getContentHeader();
+    }
+
+    @Override
     public String getStatusDesc(){
-        return super.getStatusDesc() + ", and there are " + Runtime.getRuntime().availableProcessors() + " processors available";
+        return ss.getStatusDesc() + ", and there are " + Runtime.getRuntime().availableProcessors() + " processors available";
     }
 
     @Override
     public Integer getRequestCost(){
-        return super.getRequestCost() + requestCost;
+        return ss.getRequestCost() + requestCost;
     }
 }
